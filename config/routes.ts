@@ -1,17 +1,34 @@
 export default [
-  { name: '登录', path: '/user', layout: false, routes: [{ path: '/user/login', component: './User/Login' }] },
-  { path: '/welcome', name: '欢迎', icon: 'smile', component: './Welcome' },
+  { path: '/', name: '主页', icon: 'smile', component: './Index' },
+  {
+    path: '/interface_info/:id',
+    name: '查看接口',
+    icon: 'smile',
+    component: './InterfaceInfo',
+    hideInMenu: true,
+  },
+  {
+    name: '登录',
+    path: '/user',
+    layout: false,
+    routes: [{ path: '/user/login', component: './User/Login' }],
+  },
+  // { path: '/welcome', name: '欢迎', icon: 'smile', component: './Index' },
   {
     path: '/admin',
     name: '管理页',
     icon: 'crown',
     access: 'canAdmin',
     routes: [
-      { path: '/admin', redirect: '/admin/sub-page' },
-      { name: '二级管理页', icon: 'smile', path: '/admin/sub-page', component: './Admin' },
+      {
+        name: '接口管理',
+        icon: 'table',
+        path: '/admin/interface_info',
+        component: './Admin/InterfaceInfo',
+      },
     ],
   },
-  { name: '查询表格', icon: 'table', path: '/list', component: './TableList' },
-  { path: '/', redirect: '/welcome' },
+
+  // { path: '/', redirect: '/welcome' },
   { path: '*', layout: false, component: './404' },
 ];
