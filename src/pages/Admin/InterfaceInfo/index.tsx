@@ -283,7 +283,7 @@ const TableList: React.FC = () => {
         // </a> : null,
         record.status === 1 ? <Button
           type="text"
-          key="config"
+          key="online"
           danger
           onClick={() => {
             handleOffline(record);
@@ -293,7 +293,7 @@ const TableList: React.FC = () => {
         </Button> : null,
         <Button
           type="text"
-          key="config"
+          key="offline"
           danger
           onClick={() => {
             handleRemove(record);

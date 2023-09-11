@@ -8,9 +8,11 @@ import { AvatarDropdown, AvatarName } from './components/RightContent/AvatarDrop
 import { requestConfig } from './requestConfig';
 import {InitialState} from "@/typings";
 import {getLoginUserUsingGET} from "@/services/xkapi-backend/userController";
+import defaultSettings from "../config/defaultSettings";
 const isDev = process.env.NODE_ENV === 'development';
 const loginPath = '/user/login';
-
+const registerPath = '/user/register';
+const NO_NEED_LOGIN_WHITE_LIST = [registerPath, loginPath];
 /**
  * @see  https://umijs.org/zh-CN/plugins/plugin-initial-state
  * */
@@ -18,18 +20,32 @@ export async function getInitialState(): Promise<InitialState> {
   const state: InitialState = {
     loginUser: undefined,
   }
-  try {
-    const res = await getLoginUserUsingGET();
-    if(res.data){
-      state.loginUser = res.data;
+  // if(!NO_NEED_LOGIN_WHITE_LIST.includes(history.location.pathname)) {
+    try {
+      const res = await getLoginUserUsingGET();
+      if(res.data){
+        state.loginUser = res.data;
+      }
+    } catch (error) {
+      history.push(loginPath);
     }
-  } catch (error) {
-    history.push(loginPath);
-  }
-  return state;
-  // // 如果不是登录页面，执行
+    return state;
+//   }
+//
+// return state;
+  // const fetchUserInfo = async () => {
+  //   try {
+  //     return (await getLoginUserUsingGET());
+  //   } catch (error) {
+  //     history.push(loginPath);
+  //   }
+  //   return undefined;
+  // };
+
+  // 如果不是登录页面，执行
   // const { location } = history;
   // if (location.pathname !== loginPath) {
+  //   if(!NO_NEED_LOGIN_WHITE_LIST.includes(history.location.pathname)){
   //   const currentUser = await fetchUserInfo();
   //   return {
   //     fetchUserInfo,
@@ -61,7 +77,10 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
     onPageChange: () => {
       const { location } = history;
       // 如果没有登录，重定向到 login
-      if (!initialState?.loginUser && location.pathname !== loginPath) {
+      /*if (!initialState?.loginUser && location.pathname !== loginPath) {
+        history.push(loginPath);
+      }*/
+      if(!initialState?.loginUser && !NO_NEED_LOGIN_WHITE_LIST.includes(location.pathname)){
         history.push(loginPath);
       }
     },
@@ -87,11 +106,11 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
     ],
     links: isDev
       ? [
-          <Link key="openapi" to="/umi/plugin/openapi" target="_blank">
-            <LinkOutlined />
-            <span>OpenAPI 文档</span>
-          </Link>,
-        ]
+        <Link key="openapi" to="/umi/plugin/openapi" target="_blank">
+          <LinkOutlined />
+          <span>OpenAPI 文档</span>
+        </Link>,
+      ]
       : [],
     menuHeaderRender: undefined,
     // 自定义 403 页面

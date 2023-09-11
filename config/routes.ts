@@ -1,17 +1,32 @@
 export default [
-  { path: '/', name: '主页', icon: 'smile', component: './Index' },
   {
-    path: '/interface_info/:id',
+    path: '/',
+    name: '主页',
+    icon: 'smile',
+    component: './Index',
+  },
+  {
     name: '查看接口',
     icon: 'smile',
+    path: '/interface_info/:id',
     component: './InterfaceInfo',
+    // routes: [{ path: '/interface_info/:id', component: './InterfaceInfo' },
+    //   // { path: '/interface_info/1', component: './InterfaceInfo' }
+    // ],
     hideInMenu: true,
   },
+
   {
     name: '登录',
     path: '/user',
     layout: false,
     routes: [{ path: '/user/login', component: './User/Login' }],
+  },
+  {
+    // name: '注册',
+    path: '/user/register',
+    layout: false,
+    component: './User/Register',
   },
   // { path: '/welcome', name: '欢迎', icon: 'smile', component: './Index' },
   {

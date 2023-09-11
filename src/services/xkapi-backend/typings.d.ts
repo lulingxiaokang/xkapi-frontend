@@ -172,25 +172,9 @@ declare namespace API {
     url?: string;
   };
 
-  /*  type InterfaceInfoVO = {
-    totalNum?: number;
-  };*/
-
   type InterfaceInfoVO = {
-    createTime?: string;
-    description?: string;
-    id?: number;
-    isDelete?: number;
-    method?: string;
     name?: string;
-    requestHeader?: string;
-    requestParams?: string;
-    responseHeader?: string;
-    status?: number;
     totalNum?: number;
-    updateTime?: string;
-    url?: string;
-    userId?: number;
   };
 
   type listInterfaceInfoByPageUsingGETParams = {
